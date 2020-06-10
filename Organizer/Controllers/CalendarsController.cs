@@ -21,18 +21,25 @@ namespace Organizer.Controllers
         }
 
         //GET
-        [HttpGet("{userId}")]
+        [Route("BookingForUserById/{userId}")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Calendar>>> GetBookingForUserById(Guid userId)
         {
             return await _context.Bookings.Where(b => b.UserId == userId).ToListAsync();
         }
         //GET
-        [HttpGet("{username}")]
+        [Route("BookingForUserByUserName/{username}")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Calendar>>> GetBookingForUserByUserName(string username)
         {
             return await _context.Bookings.Where(b => b.user.UserName == username).ToListAsync();
         }
-
+        [Route("BookingsByDate/{date}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Calendar>>> GetBookingByDay(DateTime date)
+        {
+            return await _context.Bookings.Where(b => b.day == date).ToListAsync();
+        }
 
         // GET: api/Calendars
         [HttpGet]

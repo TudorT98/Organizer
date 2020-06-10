@@ -20,8 +20,16 @@ namespace Organizer.Controllers
             _context = context;
         }
 
-        // GET: api/Users
-        [HttpGet("{date}")]
+
+        [Route("UsersIdByUsername/{username}")]
+        [HttpGet]
+        public  Guid GetUsersIdByUserName(string username)
+        {
+           var res =  _context.Users.Where(u => u.UserName == username).Select(u =>  u.Id ).FirstOrDefault();
+           return res;
+        }
+        [Route("UsersByDate/{date}")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsersByDay(DateTime date)
         {
             return await _context.Users.Where(u => u.program.Where(p => p.day == date).Count() > 0).ToListAsync();
